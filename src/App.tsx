@@ -3,9 +3,9 @@ import { useState, useEffect } from 'react';
 
 
 interface Post {
-  idMeal: string; 
-  strMeal: string;
-  strCategory: string;
+  id: number; 
+  original_title: string;
+  overview: string;
 }
 
 
@@ -15,9 +15,9 @@ function App() {
 
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      const response = await fetch('https://api.themoviedb.org/3/discover/movie?api_key=40c5472500254014bc0441252e3b37ac&language=en-US&page=1&with_genres=37');
       const data = await response.json();
-      setPosts(data.meals);
+      setPosts(data.results);
     };
     fetchPosts();
   }, []);
@@ -25,9 +25,9 @@ function App() {
   return (
     <ul>
       {posts.map((post) => (
-        <li key={post.idMeal}>
-          <h2>{post.strMeal}</h2>
-          <p>{post.strCategory}</p>
+        <li key={post.id}>
+          <h2>{post.original_title}</h2>
+          <p>{post.overview}</p>
         </li>
       ))}
     </ul>
